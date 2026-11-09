@@ -18,11 +18,15 @@ def save_expenses(expenses):
     file.close()
 
 
+
 def show_expenses(expenses):
     for expense in expenses:
+
         print("Title:", expense["title"])
         print("Amount:", expense["amount"])
         print("Category:", expense.get("category", "Not set"))
         print("Date:", expense.get("date", "Not set"))
-        print("Priority:", expense.get("priority", "Not set"))
+        print("Priority:", expense.get("priority", "Not set").upper())
+
+
         
