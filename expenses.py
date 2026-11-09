@@ -1,6 +1,18 @@
 
-def show_expenses(expenses):
-    for expense in expenses:
-        print("\n")
-        print("Name:", expense["name"])
-        print("Price:", expense["price"])
+import json
+
+def load_expenses():
+    try:
+        file = open("expenses.json", "r")
+        expenses = json.load(file)
+        file.close()
+        return expenses
+
+    except FileNotFoundError:
+        return []
+
+
+def save_expenses(expenses):
+    file = open("expenses.json", "w")
+    json.dump(expenses, file)
+    file.close()
