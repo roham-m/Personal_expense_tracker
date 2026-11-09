@@ -1,5 +1,5 @@
 
-from expenses import load_expenses, save_expenses
+from expenses import load_expenses, save_expenses, show_expenses
 from dotenv import load_dotenv
 import os
 
@@ -20,33 +20,47 @@ if admin == "yes":
 
 expenses = load_expenses()
 
-for expense in expenses:
-    print(expense["name"], expense["price"])
+print("Previous Expenses:")
+show_expenses(expenses)
 
 count = int(input("How many expenses? "))
 
 for i in range(count):
-    expense_name = input("Enter expense name: ")
+    title = input("Enter expense title: ")
 
-    while expense_name == "":
-        print("Name cannot be empty!")
-        expense_name = input("Enter expense name: ")
+    while title == "":
+        print("Title cannot be empty!")
+        title = input("Enter expense title: ")
 
     while True:
         try:
-            price = float(input("Enter price: "))
+            amount = float(input("Enter amount: "))
 
-            if price > 0:
+            if amount > 0:
                 break
 
-            print("Price must be positive!")
+            print("Amount must be positive!")
 
         except ValueError:
-            print("Invalid price!")
+            print("Invalid amount!")
+
+    category = input("Enter category: ")
+    date = input("Enter date (YYYY-MM-DD): ")
+
+    while True:
+        priority = input("Enter priority (low/medium/hard): ").lower()
+
+        if priority == "low" or priority == "medium" or priority == "hard":
+            break
+
+        print("Invalid priority! Try again.")
 
     expense = {
-        "name": expense_name,
-        "price": price
+        "title": title,
+        "amount": amount,
+        "category": category,
+        "date": date,
+        "priority": priority
     }
 
     expenses.append(expense)
@@ -54,6 +68,4 @@ for i in range(count):
 save_expenses(expenses)
 
 print("All Expenses:")
-
-for expense in expenses:
-    print(expense["name"], expense["price"])
+show_expenses(expenses)
